@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 @RestController
-@RequestMapping(value = "/worldladder")
+@RequestMapping(value = "/wordladder")
 public class Worldladdercontrol {
     @RequestMapping(value = "/word1={word1}&word2={word2}",method = RequestMethod.GET)
     public static String app(@PathVariable String word1,@PathVariable String word2) throws Exception
