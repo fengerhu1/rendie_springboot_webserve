@@ -13,15 +13,17 @@ import java.util.Queue;
 import java.util.*;
 import java.util.Scanner;
 import java.text.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 @RestController
 @RequestMapping(value = "/wordladder")
 public class Worldladdercontrol {
+    protected static Logger logger=LoggerFactory.getLogger(Worldladdercontrol.class);
     @RequestMapping(value = "/word1={word1}&word2={word2}",method = RequestMethod.GET)
     public static String app(@PathVariable String word1,@PathVariable String word2) throws Exception
     {
@@ -43,14 +45,17 @@ public class Worldladdercontrol {
         Iterator i_it2 = word_ladder.entrySet().iterator();
         if ((!word_have_found.containsKey(word1)) || (!word_have_found.containsKey(word2)))
         {
+            logger.debug("访问Wordladder path={}","The two words must be found in the dictionary.");
             return("The two words must be found in the dictionary.");
         }
         else if (word1.length() != word2.length())
         {
+            logger.debug("访问Wordladder path={}","The two words must be the same length.");
             return("The two words must be the same length.");
         }
         else if (word1.equals(word2))
         {
+            logger.debug("访问Wordladder path={}","The two words must be different.");
             return("The two words must be different.");
         }
         else {
@@ -107,10 +112,11 @@ public class Worldladdercontrol {
             {
                 //cout << "A ladder from " << word_2 << " back to " << word_1 << ":" << endl;
                 //cout << word_ladder[word_1] << endl;
-
+                logger.debug("访问Wordladder path={}",(String) word_ladder.get(word1));
                 return (String) word_ladder.get(word1);
             } else
                 //cout << "No word ladder found from azure back to metal." << endl;
+                logger.debug("no wordladder","No word ladder found from azure back to metal.\n");
                 return "No word ladder found from azure back to metal.\n";
 
 
@@ -210,26 +216,5 @@ public class Worldladdercontrol {
 
         }
     }
-    private static Log log = LogFactory.getLog(Worldladdercontrol.class);
-    public void test()
 
-    {
-        log.debug("debug");
-
-        log.info("info");
-
-        log.warn("warn");
-
-        log.error("error");
-
-        log.fatal("fatal");
-    }
-    public static void maintest(String[] args)
-
-
-
-    {
-        Worldladdercontrol testLog = new Worldladdercontrol();
-        testLog.test();
-    }
 }
